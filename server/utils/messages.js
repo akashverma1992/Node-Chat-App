@@ -1,7 +1,8 @@
-var generateMessage = (from, text) => {
+var generateMessage = (from, text, date) => {
   return {
     from,
-    text
+    text,
+    date
   };
 };
 

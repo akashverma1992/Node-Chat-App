@@ -29,20 +29,34 @@ socket.on('disconnect', function () {
 // on newEmail event listener
 socket.on('newMessage', function (message) {
   console.log(`New Message: `, message);
-  var ul = $('#messages');
-  var li = $('<li>').text(message.text);
-  ul.append(li);
+  // var ul = $('#messages_left');
+  // var li = $('<li>').text(message.date + ' ' + message.text);
+  var div = $('<div>');
+  div.text(message.date + ' ' + message.text);
+  div.classname = 'messages_left';
+  $('body').append(div);
   // document.getElementById('messages').appendChild(document.createElement('li')).innerText = message.message;
 });
 
 // jquery
 $(() => {
   $('form').submit(() => {
+    // var ul = $('#messages_right');
+    var date = new Date().toDateString();
+    // var li = $('<li>').text(date + ' ' + $('#m').val());
+    // ul.append(li);
+    var div = $('<div>');
+    div.text(date + ' ' + $('#m').val());
+    div.classname = 'messages_right';
+    $('body').append(div);
+
     socket.emit('createMessage', {
-      from: 'abc',
+      from: socket.id,
       to: 'xyz',
       message: $('#m').val(),
-      date: new Date().getTime()
+      date: date
+    }, function () {
+      console.log('Got it');
     });
     $('#m').val('');
   });

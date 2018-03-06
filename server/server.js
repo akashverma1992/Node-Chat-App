@@ -17,16 +17,10 @@ io.on('connection', (socket) => {
   console.log('a user is connected.');
 
   // fire event when a user joins the app
-  /* socket.emit('newUser', {
-    text: "Welcome user from admin."
-  }); */
-  socket.emit('newUser', generateMessage('Admin', 'Welcome to the chat app.'));
+  socket.emit('newUser', generateMessage('Admin', 'Welcome to the chat app.', ''));
 
   // fire event to notify about the newly joined user
-  /* socket.broadcast.emit ('newUserJoined', {
-    text: "New User Joined from Admin."
-  }); */
-  socket.broadcast.emit ('newUserJoined', generateMessage('Admin', 'New User Joined.'));
+  socket.broadcast.emit ('newUserJoined', generateMessage('Admin', 'New User Joined.', ''));
 
   // on client disconnect eventhandler
   socket.on('disconnect', () => {
@@ -34,22 +28,12 @@ io.on('connection', (socket) => {
   });
 
   // Broadcasting 'newMessage' event
-  socket.on('createMessage', (msg) => {
+  socket.on('createMessage', (msg, callback) => {
     console.log('CreateMessage: ', msg);
-    // console.log('SocketId: ', socket.id);
     
     // send message to everyone including the sender
-    /* io.emit('newMessage', {
-      message: msg.message,
-      date: msg.date
-    }); */
-
-    // send message to everyone except the sender
-    /* socket.broadcast.emit('newMessage', {
-      message: msg.message,
-      date: msg.date
-    }); */
-    socket.broadcast.emit('newMessage', generateMessage(msg.from, msg.message));
+    socket.broadcast.emit('newMessage', generateMessage(msg.from, msg.message, msg.date));
+    callback('This is from server.');
   });
 });
 

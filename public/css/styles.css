@@ -30,16 +30,36 @@ form button {
     padding: 10px;
 }
 
-#messages {
+.messages_left {
     list-style-type: none;
     margin: 0;
     padding: 0;
+    float: left;
+    border: 1px solid black;
+    text-align: left;
 }
 
-#messages li {
+.messages_left li {
     padding: 5px 10px;
 }
 
-#messages li:nth-child(odd) {
+.messages_left li:nth-child(odd) {
+    background: #eee;
+}
+
+.messages_right {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    float: right;
+    border: 1px solid black;
+    text-align: right;
+}
+
+.messages_right li {
+    padding: 5px 10px;
+}
+
+.messages_right li:nth-child(odd) {
     background: #eee;
 }
