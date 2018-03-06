@@ -17,19 +17,17 @@ io.on('connection', (socket) => {
   
   // on client disconnect eventhandler
   socket.on('disconnect', () => {
-    console.log('a user is disconnected.');    
+    console.log('a user is disconnected.');
   });
 
-  // newEmail event creator
-  socket.emit('newEmail', {
-    to: 'aakash@example.com',
-    from: 'ankit@example.com',
-    text: 'Hello World!',
-    createAt: Date.now()
-  });
-
-  socket.on('createEmail', (email) => {
-    console.log('Create Email: ', email);
+  // Broadcasting 'newMessage' event
+  socket.on('createMessage', (msg) => {
+    console.log('CreateMessage: ', msg);
+    console.log('SocketId: ', socket.id);
+    io.emit('newMessage', {
+      message: msg.message,
+      date: msg.date
+    });
   });
 });
 

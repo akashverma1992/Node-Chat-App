@@ -1,4 +1,6 @@
 var socket = io();
+console.log('Socket: ', socket);
+
 // on client connect eventlistener
 socket.on('connect', function () {
   console.log('Connected to server');
@@ -10,14 +12,17 @@ socket.on('disconnect', function () {
 });
 
 // on newEmail event listener
-socket.on('newEmail', function(email) {
-  console.log(`New Email: `, email);
+socket.on('newMessage', function (message) {
+  console.log(`New Message: `, message);
 });
 
-// createEmail event
-socket.emit('createEmail', {
-  to: 'ankit@example.com',
-  from: 'aakash@example.com',
-  msg: 'received your email.',
-  createdAt: Date.now()
+// jquery
+$(() => {
+  $('form').submit(() => {
+    socket.emit('createMessage', {
+      message: $('#m').val(),
+      date: new Date().getTime()
+    });
+    $('#m').val('');
+  });
 });
